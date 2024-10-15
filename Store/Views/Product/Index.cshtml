@@ -1,0 +1,40 @@
+@model List<Product>
+
+@{
+    ViewBag.Title = "All Products";
+}
+
+<h2>All Products</h2>
+<p><a asp-action="Create"><button  class="btn btn-primary">Add new Product</button></a></p>
+@if (Model != null && Model.Count != 0)
+{
+    <table class="table table-success">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">CreatedDate</th>
+            <th scope="col">UpdatedDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th scope="row">@p.ProductName</th>
+                <td>@p.Price</td>
+                <td>@p.CreatedDate</td>
+                <td>@p.UpdatedDate</td>
+                <td><a asp-action="Details" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-outline-danger">Details</button></a></td>
+                <td><a asp-action="Create" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-secondary">Make Order</button></a></td>
+                <td><a asp-action="Edit" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-warning">Edit</button></a></td>
+                <td><a asp-action="Delete" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-danger">Delete</button></a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3>Нету продукта пока!</h3>
+}
