@@ -1,0 +1,35 @@
+@model List<Brand>
+
+@{
+ViewBag.Title = "All Brands";
+}
+
+<h2>All Brands</h2>
+<p><a asp-action="Create"><button  class="btn btn-primary">Add new Brand</button></a></p>
+@if (Model != null && Model.Count != 0)
+{
+<table class="table table-success">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var b in Model)
+    {
+    <tr>
+        <th scope="row">@b.Name</th>
+        <th scope="row">@b.Description</th>
+        <td><a asp-action="Delete" asp-controller="Brand" asp-route-id="@b.Id"><button class="btn btn-danger">Delete</button></a></td>
+    </tr>
+    }
+    </tbody>
+</table>
+}
+else
+{
+    <h3>Нету Brand пока! Создайте.</h3>
+}
+
+

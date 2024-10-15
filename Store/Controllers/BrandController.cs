@@ -4,12 +4,12 @@ using Store.Models;
 
 namespace Store.Controllers;
 
-public class CategoryController : Controller
+public class BrandController : Controller
 {
     private readonly StoreContext _context;
     private readonly IWebHostEnvironment _environment;
     
-    public CategoryController(StoreContext context, IWebHostEnvironment environment)
+    public BrandController(StoreContext context, IWebHostEnvironment environment)
     {
         _context = context;
         _environment = environment;
@@ -18,8 +18,8 @@ public class CategoryController : Controller
     // GET
     public IActionResult Index()
     {
-        List<Category> categories = _context.Categories.ToList();
-        return View(categories);
+        List<Brand> brands = _context.Brands.ToList();
+        return View(brands);
     }
     //----------------------------------------------------------
     //Create
@@ -29,23 +29,16 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Category category)
+    public IActionResult Create(Brand brand)
     {
-        string errorMessage = null;
-        if (_context.Categories.Any(c => c.Name == category.Name))
+        if (brand != null)
         {
-            errorMessage = $"{category.Name} категория с таким именем уже существует!";
-            ViewBag.ErrorMessage = errorMessage;
-            return View(category);
-        }
-        if (category != null)
-        {
-            _context.Add(category);
+            _context.Add(brand);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        return View(category);
+        return View(brand);
     }
     //----------------------------------------------------------
     
@@ -56,7 +49,7 @@ public class CategoryController : Controller
         {
             return NotFound();
         }
-        var obj = _context.Categories.Find(id);
+        var obj = _context.Brands.Find(id);
         if (obj == null)
         {
             return NotFound();
@@ -66,14 +59,14 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete(Category category)
+    public IActionResult Delete(Brand brand)
     {
-        if (category != null)
+        if (brand != null)
         {
-            _context.Remove(category);
+            _context.Remove(brand);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        return View(category);
+        return View(brand);
     }
 }
