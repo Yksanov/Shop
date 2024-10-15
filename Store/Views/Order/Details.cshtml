@@ -1,0 +1,28 @@
+@model List<Order>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Show Users</h2>
+@if (Model != null && Model.Count != 0)
+{
+    <div class="row">
+        <div class="col-6">
+            @foreach (var e in Model)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>ID: </strong>@e.Id</li>
+                    <li class="list-group-item"><strong>Name: </strong>@e.Name</li>
+                    <li class="list-group-item"><strong>Address: </strong>@e.Address</li>
+                    <li class="list-group-item"><strong>Contact Phone: </strong>@e.ContactPhone</li>
+                    <li class="list-group-item"><strong>Quantity: </strong>@e.Quantity</li>
+                    <li class="list-group-item"><strong>Order Date: </strong>@e.OrderDate</li>
+                </ul>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>Users not found</h3>
+}

@@ -1,0 +1,39 @@
+@model List<Order>
+
+@{
+    ViewBag.Title = "All orders";
+}
+
+<h2>All orders</h2>
+@if (Model != null && Model.Count != 0)
+{
+    <table class="table table-success">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Contact Phone</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Product name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <th scope="row">@a.Name</th>
+                <td>@a.Address</td>
+                <td>@a.ContactPhone</td>
+                <td>@a.Quantity</td>
+                <td>@a.OrderDate</td>
+                <td>@a.Product.ProductName</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3>Orders not found</h3>
+}
