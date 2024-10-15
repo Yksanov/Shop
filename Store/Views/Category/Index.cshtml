@@ -1,0 +1,31 @@
+@model List<Category>
+
+@{ 
+    ViewBag.Title = "All Categories";
+}
+
+<h2>All Category</h2>
+<p><a asp-action="Create"><button  class="btn btn-primary">Add new Category</button></a></p>
+@if (Model != null && Model.Count != 0)
+{
+<table class="table table-success">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+    <tr>
+        <th scope="row">@c.Name</th>
+        <td><a asp-action="Delete" asp-controller="Category" asp-route-id="@c.Id"><button class="btn btn-danger">Delete</button></a></td>
+    </tr>
+    }
+    </tbody>
+</table>
+}
+else
+{
+    <h3>Нету категории пока! Создайте.</h3>
+}
