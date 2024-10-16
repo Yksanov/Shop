@@ -16,9 +16,26 @@ public class ProductController : Controller
     }
     
     // GET
-    public IActionResult Index()
+    public IActionResult Index(int? categoryId, int? brandId)
     {
         List<Product> products = _context.Products.ToList();
+        if (categoryId.HasValue)
+        {
+            products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
+        }
+        if (brandId.HasValue)
+        {
+            products = products.Where(p => p.CategoryId == brandId.Value).ToList();
+        }
+
+        if (!products.Any())
+        {
+            ViewBag.Message = "Товары нету по вашему запросу!";
+        }
+
+        ViewBag.Categories = _context.Categories.ToList();
+        ViewBag.Brands = _context.Brands.ToList();
+        
         return View(products);
     }
     

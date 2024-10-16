@@ -5,7 +5,36 @@
 }
 
 <h2>All Products</h2>
-<p><a asp-action="Create"><button  class="btn btn-primary">Add new Product</button></a></p>
+<div class="row mb-4">
+    <p><a asp-action="Create"><button  class="btn btn-primary">Add new Product</button></a></p>
+    <form method="get" asp-action="Index" class="d-flex align-content-between">
+        <div class="col-4 px-3">
+            <select name="categoryId" class="form-control">
+                <option disabled selected>--Select Category--</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-4 px-3">
+            <select name="brandId" class="form-control">
+                <option disabled selected>--Select Brand--</option>
+                @foreach (var brand in ViewBag.Brands)
+                {
+                    <option value="@brand.Id">@brand.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-success px-5">Filter</button>
+    </form>
+    @if (!Model.Any())
+    {
+        <p class="text-danger">@ViewBag.Message</p>
+    }
+</div>
+
 @if (Model != null && Model.Count != 0)
 {
     <div class="row">
