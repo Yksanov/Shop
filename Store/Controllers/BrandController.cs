@@ -31,6 +31,14 @@ public class BrandController : Controller
     [HttpPost]
     public IActionResult Create(Brand brand)
     {
+        string errorMessage = null;
+        if (_context.Brands.Any(c => c.Name == brand.Name))
+        {
+            errorMessage = $"{brand.Name} бренд с таким именем уже существует!";
+            ViewBag.ErrorMessage = errorMessage;
+            return View(brand);
+        }
+        
         if (brand != null)
         {
             _context.Add(brand);

@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <p class="card-text">Наименование: @p.ProductName</p>
                             <p class="card-text">Цена: @p.Price</p>
-                            <p class="card-text">Дата: @p.CreatedDate</p>
+                            <p class="card-text">Дата: @p.UpdatedDate.ToString("MM/d/yyyy")</p>
                             <div class="row py-3">
                                 <div class="col">
                                     <a asp-action="Create" asp-controller="Order" asp-route-id="@p.Id"><button class="btn btn-outline-success">Make Order</button></a>

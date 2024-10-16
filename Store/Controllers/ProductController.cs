@@ -54,27 +54,25 @@ public class ProductController : Controller
         {
             return NotFound($"Product with this id: {id} not found");
         }
+        
+        ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+        ViewBag.Brands = new SelectList(_context.Brands, "Id", "Name");
+        
         return View(p);
     }
 
     [HttpPost]
     public IActionResult Edit(Product product)
     {
-        try
+        if (product != null)
         {
-            if (product != null)
-            {
-                _context.Update(product);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            _context.Update(product);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
         return View(product);
     }
+    
     //----------------------------------------------------------
     //Delete
     public IActionResult Delete(int? id)

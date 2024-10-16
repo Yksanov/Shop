@@ -1,3 +1,5 @@
+@using System.Diagnostics
+@using System.Runtime.InteropServices.JavaScript
 @model Product
 
 @{
@@ -26,18 +28,54 @@ ViewBag.Title = "Edit product";
                     <input asp-for="ImageUrl" type="text">
                 </label>
             </div>
-            <div class="form-row">
+            
+            
+            <div class="form_row">
                 <label for="">
-                    <input disabled type="hidden" value="@Model.CreatedDate">
+                    <input asp-for="CreatedDate" type="hidden">
                 </label>
-                <input asp-for="CreatedDate" type="hidden" value="@Model.Id">
             </div>
-            <div class="form-row">
+            <div class="form_row">
                 <label for="">
-                    <input disabled type="hidden" value="@Model.UpdatedDate">
+                    <input asp-for="UpdatedDate" type="hidden">
                 </label>
-                <input asp-for="UpdatedDate" type="hidden" value="@Model.Id">
             </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="CategoryId"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="BrandId"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-control">
+                        <option disabled selected>--Select Brand--</option>
+                    </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+            </div>
+            
+            @* <div class="form_row"> *@
+            @*     <label for=""> *@
+            @*         <input asp-for="CategoryId" type="hidden"> *@
+            @*     </label> *@
+            @* </div> *@
+            @* <div class="form_row"> *@
+            @*     <label for=""> *@
+            @*         <input asp-for="BrandId" type="hidden"> *@
+            @*     </label> *@
+            @* </div> *@
+            
             <button class="btn btn-outline-warning" type="submit">Update</button>
         </form>
     </div>
