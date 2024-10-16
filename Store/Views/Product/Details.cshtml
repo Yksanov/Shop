@@ -18,7 +18,11 @@
                 </ul>
             </div>
             <div class="col-6">
-                <img src="@Model.ImageUrl" alt="image"/>
+                <img src="@Model.ImageUrl" alt="image" class="img-fluid" style="width: 100%; max-width: 300px; height: auto; max-height: 300px; object-fit: cover;"/>
+            </div>
+            <div class="py-3">
+                <a asp-action="Edit" asp-controller="Product" asp-route-id="@Model.Id"><button class="btn btn-warning">Edit</button></a>
+                <a asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id"><button class="btn btn-danger">Delete</button></a>
             </div>
         </div>
     }
