@@ -25,7 +25,7 @@ public class ProductController : Controller
         }
         if (brandId.HasValue)
         {
-            products = products.Where(p => p.CategoryId == brandId.Value).ToList();
+            products = products.Where(p => p.BrandId == brandId.Value).ToList();
         }
 
         if (!products.Any())
