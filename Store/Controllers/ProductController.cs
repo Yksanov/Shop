@@ -4,7 +4,7 @@ using Store.Models;
 
 namespace Store.Controllers;
 
-public class ProductController : Controller
+public class ProductController: Controller
 {
     private readonly StoreContext _context;
     private readonly IWebHostEnvironment _environment;
@@ -50,15 +50,17 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Product product)
+    public IActionResult Create([Bind("ProductName, Price, ImageUrl, CreatedDate, UpdatedDate, CategoryId, BrandId")] Product product)
     {
-        if (product != null)
+        if (ModelState.IsValid)
         {
-            _context.Add(product);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (product != null)
+            {
+                _context.Add(product);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
-
         return View(product);
     }
     

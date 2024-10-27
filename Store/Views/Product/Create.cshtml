@@ -7,17 +7,21 @@
 <div class="row">
     <div class="phone_add_form col-md-6">
         <form asp-action="Create" asp-controller="Product" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
-                <label for="Name" class="form-label">Name</label>
-                <input asp-for="ProductName" type="text" class="form-control" id="Name">
+                <label for="ProductName" class="form-label">Name</label>
+                <input asp-for="ProductName" type="text" class="form-control" id="ProductName">
+                <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Price" class="form-label">Price</label>
                 <input asp-for="Price" type="number" class="form-control" id="Price">
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="ImageUrl" class="form-label">Image</label>
                 <input asp-for="ImageUrl" type="text" class="form-control" id="ImageUrl">
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -47,12 +51,16 @@
             <div class="mb-3">
                 <label for="CreatedDate" class="form-label">CreatedDate</label>
                 <input asp-for="CreatedDate" type="date" class="form-control" id="CreatedDate">
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             
-            <div class="mb-3">
-                <input asp-for="UpdatedDate" type="hidden" class="form-control" id="UpdatedDate">
-            </div>
+            @* <div class="mb-3"> *@
+            @*     <input asp-for="UpdatedDate" type="hidden" class="form-control" id="UpdatedDate"> *@
+            @* </div> *@
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
