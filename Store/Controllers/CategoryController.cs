@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using SQLitePCL;
 using Store.Models;
 
 namespace Store.Controllers;
