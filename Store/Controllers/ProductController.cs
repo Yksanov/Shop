@@ -111,6 +111,9 @@ public class ProductController: Controller
         {
             if (product != null)
             {
+                product.CreatedDate = DateOnly.FromDateTime(DateTime.Now);
+                product.UpdatedDate = DateOnly.FromDateTime(DateTime.Now);
+                
                 _context.Add(product);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -140,6 +143,7 @@ public class ProductController: Controller
     {
         if (product != null)
         {
+            product.UpdatedDate = DateOnly.FromDateTime(DateTime.Now);
             _context.Update(product);
             _context.SaveChanges();
             return RedirectToAction("Index");
