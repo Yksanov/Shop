@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Store.Models;
+using Store.Services;
+using Store.ViewModels;
 
 namespace Store.Controllers;
 
@@ -16,27 +19,79 @@ public class ProductController: Controller
     }
     
     // GET
-    public IActionResult Index(int? categoryId, int? brandId)
+    public async Task<IActionResult> Index(int? categoryId, int? brandId, SortProductState sortOrder = SortProductState.NameAsc, int page = 1)
     {
-        List<Product> products = _context.Products.ToList();
-        if (categoryId.HasValue)
+        IEnumerable<Product> product = await _context.Products.Include(p => p.Brand).ToListAsync();
+        ViewBag.NameSort = sortOrder == SortProductState.NameAsc ? SortProductState.NameDesc : SortProductState.NameAsc;
+        ViewBag.PriceSort = sortOrder == SortProductState.PriceAsc ? SortProductState.PriceDesc : SortProductState.PriceAsc;
+        ViewBag.BrandSort = sortOrder == SortProductState.BrandAsc ? SortProductState.BrandDesc : SortProductState.BrandAsc;
+        ViewBag.CategorySort = sortOrder == SortProductState.CategoryAsc ? SortProductState.CategoryDesc : SortProductState.CategoryAsc;
+        ViewBag.CreatedDateSort = sortOrder == SortProductState.CreatedDateAsc ? SortProductState.CreatedDateDesc : SortProductState.CreatedDateAsc;
+        switch (sortOrder)
         {
-            products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
-        }
-        if (brandId.HasValue)
-        {
-            products = products.Where(p => p.BrandId == brandId.Value).ToList();
+            case SortProductState.NameAsc:
+                product = product.OrderBy(p => p.ProductName);
+                break;
+            case SortProductState.NameDesc:
+                product = product.OrderByDescending(p => p.ProductName);
+                break;
+            case SortProductState.PriceAsc:
+                product = product.OrderBy(p => p.Price);
+                break;
+            case SortProductState.PriceDesc:
+                product = product.OrderByDescending(p => p.Price);
+                break;
+            case SortProductState.BrandAsc:
+                product = product.OrderBy(p => p.Brand.Name);
+                break;
+            case SortProductState.BrandDesc:
+                product = product.OrderByDescending(p => p.Brand.Name);
+                break;
+            case SortProductState.CategoryAsc:
+                product = product.OrderBy(p => p.Category.Name);
+                break;
+            case SortProductState.CategoryDesc:
+                product = product.OrderByDescending(p => p.Category.Name);
+                break;
+            case SortProductState.CreatedDateAsc:
+                product = product.OrderBy(p => p.CreatedDate);
+                break;
+            case SortProductState.CreatedDateDesc:
+                product = product.OrderByDescending(p => p.CreatedDate);
+                break;
         }
 
-        if (!products.Any())
+        if (brandId.HasValue && brandId.Value != 0)
+            product = product.Where(p => p.BrandId == brandId);
+        if (categoryId.HasValue && categoryId.Value != 0)
+            product = product.Where(p => p.CategoryId == categoryId);
+        
+        if (!product.Any())
         {
             ViewBag.Message = "Товары нету по вашему запросу!";
         }
-
         ViewBag.Categories = _context.Categories.ToList();
         ViewBag.Brands = _context.Brands.ToList();
         
-        return View(products);
+        
+        int pageSize = 4;
+        var items = product.Skip((page - 1) * pageSize).Take(pageSize);
+        PageViewModel pvm = new PageViewModel(product.Count(), page, pageSize);
+            
+        List<Brand> brands = await _context.Brands.ToListAsync();
+        brands.Insert(0, new Brand(){Id = 0, Name = "All brands"});
+        
+        List<Category> categories = await _context.Categories.ToListAsync();
+        categories.Insert(0, new Category(){Id = 0, Name = "All categories"});
+        
+        var vm = new ProductWithViewModel()
+        {
+            Products = items.ToList(),
+            Brands = brands,
+            Categories = categories,
+            PageViewModel = pvm
+        };
+        return View(vm);
     }
     
     //----------------------------------------------------------
@@ -125,7 +180,7 @@ public class ProductController: Controller
     [HttpGet]
     public IActionResult Details(int id)
     {
-        List<Product> products = _context.Products.ToList();
+        List<Product> products = _context.Products.Include(p => p.Category).Include(p => p.Brand).ToList();
         var findProduct = products.FirstOrDefault(p => p.Id == id);
         return View(findProduct);
     }

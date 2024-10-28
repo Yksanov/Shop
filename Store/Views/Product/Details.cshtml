@@ -13,8 +13,8 @@
                     <li class="list-group-item"><strong>ID: </strong>@Model.Id</li>
                     <li class="list-group-item"><strong>Name: </strong>@Model.ProductName</li>
                     <li class="list-group-item"><strong>Price: </strong>@Model.Price</li>
-                    <li class="list-group-item"><strong>Category: </strong>@Model.CategoryId</li>
-                    <li class="list-group-item"><strong>Brand: </strong>@Model.BrandId</li>
+                    <li class="list-group-item"><strong>Category: </strong>@Model.Category.Name</li>
+                    <li class="list-group-item"><strong>Brand: </strong>@Model.Brand.Name</li>
                     
                     <li class="list-group-item"><strong>CreatedDate: </strong>@Model.CreatedDate.ToString("MM/d/yyyy")</li>
                     <li class="list-group-item"><strong>UpdatedDate: </strong>@Model.UpdatedDate.ToString("MM/d/yyyy")</li>

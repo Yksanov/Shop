@@ -1,4 +1,4 @@
-@model List<Product>
+@model Store.ViewModels.ProductWithViewModel
 
 @{
     ViewBag.Title = "All Products";
@@ -7,6 +7,29 @@
 <h2>All Products</h2>
 <div class="row mb-4">
     <p><a asp-action="Create"><button  class="btn btn-primary">Add new Product</button></a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Sorted:</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">Name</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.PriceSort">Price</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CategorySort">Category</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.BrandSort">Brand</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CreatedDateSort">Created Date</a>
+            </th>
+        </tr>
+        </thead>
+    </table>
+    
     <form method="get" asp-action="Index" class="d-flex align-content-between">
         <div class="col-4 px-3">
             <select name="categoryId" class="form-control">
@@ -29,37 +52,48 @@
         </div>
         <button type="submit" class="btn btn-outline-success px-5">Filter</button>
     </form>
-    @if (!Model.Any())
+    @if (!Model.Products.Any())
     {
         <p class="text-danger">@ViewBag.Message</p>
     }
 </div>
 
-@if (Model != null && Model.Count != 0)
+@if (Model.Products.Any())
 {
     <div class="row">
-        @foreach (var p in Model)
+        @foreach (var p in Model.Products)
         {
-                <div class="col-md-3 col-sm-6 col-12 mb-4 d-flex align-content-sm-stretch">
-                    <div class="card border-warning" style="width: 18rem;">
-                        <img src="@p.ImageUrl" class="card-img-top" alt="Image" style="width: 100%; max-width: 288px; height: 200px; object-fit: cover;">
-                        <div class="card-body">
-                            <p class="card-text">Наименование: @p.ProductName</p>
-                            <p class="card-text">Цена: @p.Price</p>
-                            <p class="card-text">Дата: @p.CreatedDate.ToString("MM/d/yyyy")</p>
-                            <div class="row py-3">
-                                <div class="col">
-                                    <a asp-action="Create" asp-controller="Order" asp-route-id="@p.Id"><button class="btn btn-outline-success">Make Order</button></a>
-                                </div>
-                                <div class="col">
-                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-outline-danger">Details</button></a>
-                                </div>
+            <div class="col-md-3 col-sm-6 col-12 mb-4 d-flex align-content-sm-stretch">
+                <div class="card border-warning" style="width: 18rem;">
+                    <img src="@p.ImageUrl" class="card-img-top" alt="Image" style="width: 100%; max-width: 288px; height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text">Наименование: @p.ProductName</p>
+                        <p class="card-text">Цена: @p.Price</p>
+                        <p class="card-text">Дата: @p.CreatedDate.ToString("MM/d/yyyy")</p>
+                        <div class="row py-3">
+                            <div class="col">
+                                <a asp-action="Create" asp-controller="Order" asp-route-id="@p.Id"><button class="btn btn-outline-success">Make Order</button></a>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Details" asp-controller="Product" asp-route-id="@p.Id"><button class="btn btn-outline-danger">Details</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         }
     </div>
+        <div>
+            @if (Model.PageViewModel.HasPreviousPage)
+            {
+                <a class="btn btn-outline-primary" asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Previous</a>
+            }
+        
+            @if (Model.PageViewModel.HasNextPage)
+            {
+                <a class="btn btn-outline-primary" asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
+            }
+        </div>
 }
 else
 {
