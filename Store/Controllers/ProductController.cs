@@ -74,7 +74,7 @@ public class ProductController: Controller
         ViewBag.Brands = _context.Brands.ToList();
         
         
-        int pageSize = 4;
+        int pageSize = 3;
         var items = product.Skip((page - 1) * pageSize).Take(pageSize);
         PageViewModel pvm = new PageViewModel(product.Count(), page, pageSize);
             
