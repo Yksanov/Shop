@@ -6,7 +6,6 @@ using Store.ViewModels;
 
 namespace Store.Controllers;
 
-[Authorize]
 public class BrandController : Controller
 {
     private readonly StoreContext _context;
@@ -19,7 +18,6 @@ public class BrandController : Controller
     }
     
     // GET
-    [Authorize(Roles = "admin, user")]
     public async Task<IActionResult> Index(int page = 1)
     {
         List<Brand> brands = await _context.Brands.ToListAsync();
@@ -119,6 +117,7 @@ public class BrandController : Controller
     //----------------------------------------------------------
     
     //Delete
+    [Authorize(Roles = "admin")]
     public IActionResult Delete(int? id)
     {
         if (id == null || id == 0)
@@ -133,7 +132,8 @@ public class BrandController : Controller
 
         return View(obj);
     }
-
+    
+    [Authorize(Roles = "admin")]
     [HttpPost]
     public IActionResult Delete(Brand brand)
     {

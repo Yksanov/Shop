@@ -5,7 +5,6 @@ using Store.Models;
 
 namespace Store.Controllers;
 
-[Authorize]
 public class OrderController : Controller
 {
     private readonly StoreContext _context;
@@ -18,6 +17,7 @@ public class OrderController : Controller
     }
     
     // GET
+    [Authorize(Roles = "admin, user")]
     public IActionResult Index()
     {
         List<Order> orders = _context.Orders.Include(o => o.Product).ToList();
@@ -26,7 +26,7 @@ public class OrderController : Controller
     
     //-----------------------------------
     //Create
-    [Authorize]
+    [Authorize(Roles = "user")]
     public IActionResult Create(int id)
     {
         Product a = _context.Products.FirstOrDefault(x => x.Id == id);
@@ -34,7 +34,7 @@ public class OrderController : Controller
         return View(); 
     }
 
-    [Authorize]
+    [Authorize(Roles = "user")]
     [HttpPost]
     public IActionResult Create(Order order)
     {

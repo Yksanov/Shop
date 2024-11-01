@@ -10,51 +10,40 @@
         <form asp-action="Create" asp-controller="Order" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-row">
-                <label for="">
-                    User Name
-                    <input asp-for="Name" type="text">
-                </label>
+                <label asp-for="Name" class="form-label">User Name</label>
+                <input asp-for="Name" type="text" class="form-control">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-row">
-                <label for="">
-                    Address
-                    <input asp-for="Address" type="text">
-                </label>
+                <label asp-for="Address" class="form-label">Address</label>
+                <input asp-for="Address" type="text" class="form-control">
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-row">
-                <label for="">
-                    Contact Phone
-                    <input asp-for="ContactPhone" type="text">
-                </label>
+                <label asp-for="ContactPhone" class="form-label">Contact Phone</label>
+                <input asp-for="ContactPhone" type="text" class="form-control">
                 <span asp-validation-for="ContactPhone" class="text-danger"></span>
             </div>
             <div class="form-row">
-                <label for="">
-                    Quantity
-                    <input asp-for="Quantity" type="number">
-                </label>
+                <label asp-for="Quantity" class="form-label">Quantity</label>
+                <input asp-for="Quantity" type="number" class="form-control">
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-row">
-                <label for="">
-                    Order Date
-                    <input asp-for="OrderDate" type="date">
-                </label>
+                <label asp-for="OrderDate" class="form-label">Order Date</label>
+                <input asp-for="OrderDate" type="date" class="form-control">
                 <span asp-validation-for="OrderDate" class="text-danger"></span>
             </div>
-            <div class="form-row">
-                <label for="">
-                    ProductName :
-                    <input disabled type="text" value="@ViewBag.Product.ProductName">
-                </label>
+            <div class="form-row py-1">
+                <label for="" class="form-label">ProductName</label>
+                <input disabled type="text" class="form-control" value="@ViewBag.Product.ProductName">
                 <input asp-for="ProductId" type="hidden" value="@ViewBag.Product.Id">
             </div>
-            <button type="submit">Order</button>
+            <button class="btn btn-outline-success" type="submit">Order</button>
         </form>
     </div>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

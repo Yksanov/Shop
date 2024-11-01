@@ -90,4 +90,10 @@ public class AccountController : Controller
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
             });
     }
+
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
 }

@@ -23,13 +23,13 @@ public class CategoryController : Controller
     }
     //----------------------------------------------------------
     //Create
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public IActionResult Create()
     {
         return View();
     }
 
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [HttpPost]
     public IActionResult Create(Category category)
     {
@@ -52,6 +52,7 @@ public class CategoryController : Controller
     //----------------------------------------------------------
     
     //Delete
+    [Authorize(Roles = "admin")]
     public IActionResult Delete(int? id)
     {
         if (id == null || id == 0)
@@ -68,6 +69,7 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "admin")]
     public IActionResult Delete(Category category)
     {
         if (category != null)
