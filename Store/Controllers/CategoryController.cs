@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Models;
 
@@ -22,11 +23,13 @@ public class CategoryController : Controller
     }
     //----------------------------------------------------------
     //Create
+    [Authorize]
     public IActionResult Create()
     {
         return View();
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult Create(Category category)
     {

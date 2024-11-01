@@ -2,28 +2,28 @@
 @{
     ViewBag.Title = "Регистрация";
 }
-<h2>Регистрация</h2>
-<div class="row">
+<h4 class="text-center">Регистрация</h4>
+<div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
                 <div>
-                    <label asp-for="Email">Введите Email</label><br/>
-                    <input type="email" asp-for="Email"/>
+                    <label asp-for="Email" class="form-label">Введите Email</label><br/>
+                    <input type="email" asp-for="Email" class="form-control"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="Password">Введите пароль</label><br/>
-                    <input type="password" asp-for="Password"/>
+                    <label asp-for="Password" class="form-label">Введите пароль</label><br/>
+                    <input type="password" asp-for="Password" class="form-control"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="ConfirmPassword">Повторите пароль</label><br/>
-                    <input type="password" asp-for="ConfirmPassword"/>
+                    <label asp-for="ConfirmPassword" class="form-label">Повторите пароль</label><br/>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
-                <div>
+                <div class="py-2">
                     <input type="submit" value="Регистрация" class="btn btn-outline-primary"/>
                 </div>
             </div>

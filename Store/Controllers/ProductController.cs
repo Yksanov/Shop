@@ -97,7 +97,7 @@ public class ProductController: Controller
     
     //----------------------------------------------------------
     //Create
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public IActionResult Create()
     {
         ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
@@ -106,7 +106,7 @@ public class ProductController: Controller
         return View();
     }
 
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [HttpPost]
     public IActionResult Create([Bind("ProductName, Price, ImageUrl, CreatedDate, UpdatedDate, CategoryId, BrandId")] Product product)
     {
@@ -127,6 +127,7 @@ public class ProductController: Controller
     
     //----------------------------------------------------------
     // Edit
+    [Authorize(Roles = "admin")]
     public IActionResult Edit(int id)
     {
         Product p = _context.Products.FirstOrDefault(x => x.Id == id);
@@ -141,6 +142,7 @@ public class ProductController: Controller
         return View(p);
     }
 
+    [Authorize(Roles = "admin")]
     [HttpPost]
     public IActionResult Edit(Product product)
     {
@@ -156,6 +158,7 @@ public class ProductController: Controller
     
     //----------------------------------------------------------
     //Delete
+    [Authorize(Roles = "admin")]
     public IActionResult Delete(int? id)
     {
         if (id == null || id == 0)
@@ -171,6 +174,7 @@ public class ProductController: Controller
         return View(obj);
     }
 
+    [Authorize(Roles = "admin")]
     [HttpPost]
     public IActionResult Delete(Product product)
     {

@@ -21,7 +21,7 @@ ViewBag.Title = "All Brands";
     <tr>
         <th scope="row">@b.Name</th>
         <th scope="row">@b.Description</th>
-        <td><a asp-action="Delete" asp-controller="Brand" asp-route-id="@b.Id"><button class="btn btn-danger">Delete</button></a></td>
+        <td><a asp-action="Delete" asp-controller="Brand" asp-route-id="@b.Id"><button class="btn btn-danger">Delete</button></a> |  <a asp-action="Edit" asp-controller="Brand" asp-route-id="@b.Id"><button class="btn btn-warning">Edit</button></a> </td>
     </tr>
     }
     </tbody>
@@ -36,8 +36,7 @@ else
 {
     <a asp-action="Index"
        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-       class="btn btn-outline-primary">
-        <i class="glyphicon glyphicon-chevron-left"></i>
+       class="btn btn-outline-primary"><i class="glyphicon glyphicon-chevron-left"></i>
         Назад
     </a>
 }
@@ -74,8 +73,7 @@ else
 {
 <a asp-action="Index"
    asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-   class="btn btn-outline-primary">
-    <i class="glyphicon glyphicon-chevron-right"></i>
+   class="btn btn-outline-primary"><i class="glyphicon glyphicon-chevron-right"></i>
     Вперед
 </a>
 }

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.Models;
 
 namespace Store.Controllers;
 
+[Authorize]
 public class OrderController : Controller
 {
     private readonly StoreContext _context;
@@ -24,6 +26,7 @@ public class OrderController : Controller
     
     //-----------------------------------
     //Create
+    [Authorize]
     public IActionResult Create(int id)
     {
         Product a = _context.Products.FirstOrDefault(x => x.Id == id);
@@ -31,6 +34,7 @@ public class OrderController : Controller
         return View(); 
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult Create(Order order)
     {
