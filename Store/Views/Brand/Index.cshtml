@@ -1,4 +1,4 @@
-@model List<Brand>
+@model Store.ViewModels.BrandPageViewModel
 
 @{
 ViewBag.Title = "All Brands";
@@ -6,7 +6,7 @@ ViewBag.Title = "All Brands";
 
 <h2>All Brands</h2>
 <p><a asp-action="Create"><button  class="btn btn-primary">Add new Brand</button></a></p>
-@if (Model != null && Model.Count != 0)
+@if (Model != null && Model.Brands.Count != 0)
 {
 <table class="table table-success">
     <thead>
@@ -16,7 +16,7 @@ ViewBag.Title = "All Brands";
     </tr>
     </thead>
     <tbody>
-    @foreach (var b in Model)
+    @foreach (var b in Model.Brands)
     {
     <tr>
         <th scope="row">@b.Name</th>
@@ -32,4 +32,50 @@ else
     <h3>Нету Brand пока! Создайте.</h3>
 }
 
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-primary">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
 
+@if (Model.PageViewModel.PageNumber - 3 > 0)
+{
+    <input type="button" disabled class="btn btn-outline-secondary" value="..."/>
+}
+
+@for (int i = System.Math.Max(Model.PageViewModel.PageNumber - 2, 1); i < Model.PageViewModel.PageNumber && i > 0; i--)
+{
+    <a asp-action="Index" asp-route-page="@i" class="btn btn-outline-primary">@i</a>
+}
+
+@for (int i = Model.PageViewModel.PageNumber; i <= (Model.PageViewModel.PageNumber + 2) && i <= Model.PageViewModel.TotalPages; i++)
+{
+    if (i == Model.PageViewModel.PageNumber)
+    {
+        <input type="button" disabled class="btn btn-outline-secondary" value="@i"/>
+    }
+    else
+    {
+        <a asp-action="Index" asp-route-page="@i" class="btn btn-outline-primary">@i</a>
+    }
+    
+}
+
+@if (Model.PageViewModel.PageNumber + 2 < Model.PageViewModel.TotalPages)
+{
+    <input type="button" disabled class="btn btn-outline-secondary" value="..."/>
+}
+
+@if (Model.PageViewModel.HasNextPage)
+{
+<a asp-action="Index"
+   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+   class="btn btn-outline-primary">
+    <i class="glyphicon glyphicon-chevron-right"></i>
+    Вперед
+</a>
+}

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +97,7 @@ public class ProductController: Controller
     
     //----------------------------------------------------------
     //Create
+    [Authorize]
     public IActionResult Create()
     {
         ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
@@ -104,6 +106,7 @@ public class ProductController: Controller
         return View();
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult Create([Bind("ProductName, Price, ImageUrl, CreatedDate, UpdatedDate, CategoryId, BrandId")] Product product)
     {

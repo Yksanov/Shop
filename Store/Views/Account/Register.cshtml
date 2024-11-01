@@ -1,0 +1,32 @@
+@model Store.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+<h2>Регистрация</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <div>
+                    <label asp-for="Email">Введите Email</label><br/>
+                    <input type="email" asp-for="Email"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Password">Введите пароль</label><br/>
+                    <input type="password" asp-for="Password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="ConfirmPassword">Повторите пароль</label><br/>
+                    <input type="password" asp-for="ConfirmPassword"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="submit" value="Регистрация" class="btn btn-outline-primary"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

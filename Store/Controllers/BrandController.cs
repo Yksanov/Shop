@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Store.Models;
+using Store.ViewModels;
 
 namespace Store.Controllers;
 
+[Authorize]
 public class BrandController : Controller
 {
     private readonly StoreContext _context;
@@ -15,13 +19,28 @@ public class BrandController : Controller
     }
     
     // GET
-    public IActionResult Index()
+    [Authorize(Roles = "admin, user")]
+    public async Task<IActionResult> Index(int page = 1)
     {
-        List<Brand> brands = _context.Brands.ToList();
-        return View(brands);
+        List<Brand> brands = await _context.Brands.ToListAsync();
+        int pageSize = 3;
+        var count = brands.Count();
+        var items = brands.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+        BrandPageViewModel bpvm = new BrandPageViewModel()
+        {
+            PageViewModel = pageViewModel,
+            Brands = items
+        };
+        
+        return View(bpvm);
+
+        // List<Brand> brands = _context.Brands.ToList();
+        // return View(brands);
     }
     //----------------------------------------------------------
     //Create
+    [Authorize(Roles = "admin")]
     public IActionResult Create()
     {
         return View();
