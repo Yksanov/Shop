@@ -63,7 +63,7 @@ public class AccountController : Controller
             if (user == null)
             {
                 Role r = _context.Roles.FirstOrDefault(u => u.Name == "user");
-                MyUser myUser = new MyUser() { Email = model.Email, Password = model.Password, Role = r, RoleId = r.Id};
+                MyUser myUser = new MyUser() { Email = model.Email, Password = model.Password,UserName = model.UserName, Role = r, RoleId = r.Id};
                 await _context.Users.AddAsync(myUser);
                 await _context.SaveChangesAsync();
                 await AuthenticateAsync(myUser);
