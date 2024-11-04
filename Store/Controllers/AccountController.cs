@@ -69,7 +69,7 @@ public class AccountController : Controller
                 await AuthenticateAsync(myUser);
                 return RedirectToAction("Index", "Product");
             }
-            ModelState.AddModelError(string.Empty, "Некорректные логин и(или) пароль");
+            ModelState.AddModelError(string.Empty, "Пользователь с таким Email уже зарегистрирован!");
         }
         return View(model);
     }
