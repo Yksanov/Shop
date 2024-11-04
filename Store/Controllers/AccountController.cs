@@ -35,7 +35,7 @@ public class AccountController : Controller
                 await AuthenticateAsync(user); // аутентификация
                 return RedirectToAction("Index", "Product");
             }
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            ModelState.AddModelError(String.Empty, "Некорректные логин и(или) пароль");
         }
 
         return View(model);
@@ -80,9 +80,12 @@ public class AccountController : Controller
         var claims = new List<Claim>
         {
             new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name),
-            new Claim("UserName", user.UserName)
+            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
         };
+
+        if (user.UserName != null)
+            claims.Add(new Claim("UserName", user.UserName));
+        
         ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id),
             new AuthenticationProperties()

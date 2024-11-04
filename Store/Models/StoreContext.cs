@@ -19,7 +19,7 @@ public class StoreContext : DbContext
     {
         modelBuilder.Entity<Role>().HasData(new Role {Id = 1, Name = "admin"});
         modelBuilder.Entity<Role>().HasData(new Role {Id = 2, Name = "user"});
-        modelBuilder.Entity<MyUser>().HasData(new MyUser {Id = 2, Email = "admin@admin.com", Password = "1qwe@QWE", RoleId = 1});
+        modelBuilder.Entity<MyUser>().HasData(new MyUser {Id = 2, Email = "admin@admin.com", Password = "1qwe@QWE", UserName = "admin", RoleId = 1});
         base.OnModelCreating(modelBuilder);
     }
 }
