@@ -18,6 +18,7 @@ public class BrandController : Controller
     }
     
     // GET
+    [Authorize(Roles = "admin, user")]
     public async Task<IActionResult> Index(int page = 1)
     {
         List<Brand> brands = await _context.Brands.ToListAsync();

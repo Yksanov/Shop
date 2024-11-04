@@ -16,6 +16,7 @@ public class CategoryController : Controller
     }
     
     // GET
+    [Authorize(Roles = "admin, user")]
     public IActionResult Index()
     {
         List<Category> categories = _context.Categories.ToList();
