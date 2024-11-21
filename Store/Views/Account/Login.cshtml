@@ -21,6 +21,15 @@
                             <input asp-for="Password" class="form-control"/>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
+
+                        <div>
+                            <label asp-for="Password" class="form-label">Remember Me?</label>
+                            <input asp-for="RememerMe"/>
+                        </div>
+                        
+                        <input type="hidden" asp-for="ReturnUrl" value="@ViewBag.ReturnUrl">
+                        
+                        
                         <div class="form-group py-3">
                             <input type="submit" value="Войти" class="btn btn-outline-primary px-5"/>
                         </div>

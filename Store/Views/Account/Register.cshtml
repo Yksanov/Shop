@@ -31,6 +31,12 @@
                             <input type="password" asp-for="ConfirmPassword" class="form-control"/>
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
+                        
+                        <div>
+                            <label asp-for="Age" class="form-label">Введите Возраст</label><br/>
+                            <input type="number" asp-for="Age" class="form-control"/>
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
                         <div class="py-2">
                             <input type="submit" value="Регистрация" class="btn btn-outline-primary"/>
                         </div>

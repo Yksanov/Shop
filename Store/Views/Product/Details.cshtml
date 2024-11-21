@@ -34,3 +34,52 @@
         <h3>Product not found</h3>
     }
 </div>
+
+<div>
+    <button type="button" class="btn btn-success" id="commentButton">New comment</button>
+    <div id="commentForm" class="invisible">
+        <input type="text" placeholder="Name" id="commentName" required>
+        <br />
+        <textarea placeholder="Your comment" id="commentBody" required></textarea>
+        <br />
+        <button type="button" class="btn btn-outline-primary" id="newCommentButton"> Save comment</button>
+    </div>
+    @if (Model.Comments == null || Model.Comments.Count() == 0)
+    {
+        <p>No Comments yet!</p>
+    }
+    else
+    {
+        <div id="comments">
+           @{ await Html.RenderPartialAsync("_CommentsPartialView", Model.Comments);}
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script>
+        const getComments = function (){
+        let timeOut = setTimeout(function (){
+            $('#comments').html('');
+            $('#results').load('@Url.Action("GetComments", "Product")?productId' + @Model.Id);
+            }, 2000);
+        }
+        
+        $('#newCommentButton').click(function (){
+            $('#commentForm').removeClass('invisible');
+        });
+        $('#newCommentButton').click(function (){
+            $.ajax({
+                url: '@Url.Action("NewComment", "Product")',
+                type: 'POST',
+                data: {'productId' : @Model.Id,
+                        'name' : $('#commentName').val(),
+                        'body' : $('#commentBody').val(),
+                        },
+                success: getComments()
+            });
+        });
+    
+    </script>
+}

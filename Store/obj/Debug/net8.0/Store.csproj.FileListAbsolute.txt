@@ -109,3 +109,8 @@ D:\Attractor\month#2\Store\Store\obj\Debug\net8.0\Store.genruntimeconfig.cache
 D:\Attractor\month#2\Store\Store\obj\Debug\net8.0\ref\Store.dll
 D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Npgsql.dll
 D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+D:\Attractor\month#2\Store\Store\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

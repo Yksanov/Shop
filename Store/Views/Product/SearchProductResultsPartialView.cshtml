@@ -1,0 +1,24 @@
+@model List<Product>
+
+<h2>Список продуктов</h2>
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Info</th>
+        </tr>
+        @foreach (var phone in Model)
+        {
+        <tr>
+            <td>@phone.ProductName</td>
+            <td>@phone.Brand.Name</td>
+            <td>@phone.Price</td>
+            <td>
+                <a asp-action="Details" asp-controller="Product" asp-route-id="@phone.Id">Details</a>
+            </td>
+        </tr>
+        }
+    </table>
+</div>

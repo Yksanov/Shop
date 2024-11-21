@@ -10,4 +10,7 @@ public class LoginViewModel
     [Required(ErrorMessage = "Password is required")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+    
+    public bool RememerMe { get; set; }
+    public string? ReturnUrl { get; set; }
 }

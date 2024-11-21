@@ -1,0 +1,9 @@
+@model List<Comment>
+
+
+@foreach (var c in Model)
+{
+    <h4>@c.Name</h4>
+    <hr/>
+    <p>@c.Body</p>
+}

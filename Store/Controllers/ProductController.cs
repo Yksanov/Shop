@@ -8,7 +8,7 @@ using Store.ViewModels;
 
 namespace Store.Controllers;
 
-public class ProductController: Controller
+public class ProductController : Controller
 {
     private readonly StoreContext _context;
     private readonly IWebHostEnvironment _environment;
@@ -18,16 +18,25 @@ public class ProductController: Controller
         _context = context;
         _environment = environment;
     }
-    
+
     // GET
-    public async Task<IActionResult> Index(int? categoryId, int? brandId, SortProductState sortOrder = SortProductState.NameAsc, int page = 1)
+    public async Task<IActionResult> Index(int? categoryId, int? brandId,
+        SortProductState sortOrder = SortProductState.NameAsc, int page = 1)
     {
         IEnumerable<Product> product = await _context.Products.Include(p => p.Brand).ToListAsync();
         ViewBag.NameSort = sortOrder == SortProductState.NameAsc ? SortProductState.NameDesc : SortProductState.NameAsc;
-        ViewBag.PriceSort = sortOrder == SortProductState.PriceAsc ? SortProductState.PriceDesc : SortProductState.PriceAsc;
-        ViewBag.BrandSort = sortOrder == SortProductState.BrandAsc ? SortProductState.BrandDesc : SortProductState.BrandAsc;
-        ViewBag.CategorySort = sortOrder == SortProductState.CategoryAsc ? SortProductState.CategoryDesc : SortProductState.CategoryAsc;
-        ViewBag.CreatedDateSort = sortOrder == SortProductState.CreatedDateAsc ? SortProductState.CreatedDateDesc : SortProductState.CreatedDateAsc;
+        ViewBag.PriceSort = sortOrder == SortProductState.PriceAsc
+            ? SortProductState.PriceDesc
+            : SortProductState.PriceAsc;
+        ViewBag.BrandSort = sortOrder == SortProductState.BrandAsc
+            ? SortProductState.BrandDesc
+            : SortProductState.BrandAsc;
+        ViewBag.CategorySort = sortOrder == SortProductState.CategoryAsc
+            ? SortProductState.CategoryDesc
+            : SortProductState.CategoryAsc;
+        ViewBag.CreatedDateSort = sortOrder == SortProductState.CreatedDateAsc
+            ? SortProductState.CreatedDateDesc
+            : SortProductState.CreatedDateAsc;
         switch (sortOrder)
         {
             case SortProductState.NameAsc:
@@ -66,25 +75,26 @@ public class ProductController: Controller
             product = product.Where(p => p.BrandId == brandId);
         if (categoryId.HasValue && categoryId.Value != 0)
             product = product.Where(p => p.CategoryId == categoryId);
-        
+
         if (!product.Any())
         {
             ViewBag.Message = "Товары нету по вашему запросу!";
         }
+
         ViewBag.Categories = _context.Categories.ToList();
         ViewBag.Brands = _context.Brands.ToList();
-        
-        
+
+
         int pageSize = 3;
         var items = product.Skip((page - 1) * pageSize).Take(pageSize);
         PageViewModel pvm = new PageViewModel(product.Count(), page, pageSize);
-            
+
         List<Brand> brands = await _context.Brands.ToListAsync();
-        brands.Insert(0, new Brand(){Id = 0, Name = "All brands"});
-        
+        brands.Insert(0, new Brand() { Id = 0, Name = "All brands" });
+
         List<Category> categories = await _context.Categories.ToListAsync();
-        categories.Insert(0, new Category(){Id = 0, Name = "All categories"});
-        
+        categories.Insert(0, new Category() { Id = 0, Name = "All categories" });
+
         var vm = new ProductWithViewModel()
         {
             Products = items.ToList(),
@@ -94,7 +104,7 @@ public class ProductController: Controller
         };
         return View(vm);
     }
-    
+
     //----------------------------------------------------------
     //Create
     [Authorize(Roles = "admin")]
@@ -102,7 +112,7 @@ public class ProductController: Controller
     {
         ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
         ViewBag.Brands = new SelectList(_context.Brands, "Id", "Name");
-        
+
         return View();
     }
 
@@ -122,9 +132,10 @@ public class ProductController: Controller
                 return RedirectToAction("Index");
             }
         }
+
         return View(product);
     }
-    
+
     //----------------------------------------------------------
     // Edit
     [Authorize(Roles = "admin")]
@@ -135,10 +146,10 @@ public class ProductController: Controller
         {
             return NotFound($"Product with this id: {id} not found");
         }
-        
+
         ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
         ViewBag.Brands = new SelectList(_context.Brands, "Id", "Name");
-        
+
         return View(p);
     }
 
@@ -153,9 +164,10 @@ public class ProductController: Controller
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         return View(product);
     }
-    
+
     //----------------------------------------------------------
     //Delete
     [Authorize(Roles = "admin")]
@@ -165,6 +177,7 @@ public class ProductController: Controller
         {
             return NotFound();
         }
+
         var obj = _context.Products.Find(id);
         if (obj == null)
         {
@@ -184,15 +197,63 @@ public class ProductController: Controller
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         return View(product);
     }
+
     //----------------------------------------------------------
     //Details
     [HttpGet]
     public IActionResult Details(int id)
     {
-        List<Product> products = _context.Products.Include(p => p.Category).Include(p => p.Brand).ToList();
+        List<Product> products = _context.Products.Include(c => c.Comments).Include(p => p.Category)
+            .Include(p => p.Brand).ToList();
         var findProduct = products.FirstOrDefault(p => p.Id == id);
         return View(findProduct);
+    }
+
+    
+    //----------------------------------------------------------
+    public IActionResult SearchProduct()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> SearchProductResults(string keyWord)
+    {
+        List<Product> results = await _context.Products.Include(p => p.Brand)
+            .Where(p => p.ProductName.Contains(keyWord)).ToListAsync();
+        return PartialView("SearchProductResultsPartialView", results);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> NewComment(int? productId, string? name, string? body)
+    {
+        if (productId.HasValue && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(body))
+        {
+            Comment comment = new Comment()
+            {
+                Id = 0,
+                ProductId = productId.Value,
+                Name = name,
+                Body = body
+            };
+
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+        }
+
+        return Json("");
+    }
+
+    public async Task<IActionResult> GetComments(int? productId)
+    {
+        if (productId.HasValue)
+        {
+            List<Comment> comments = await _context.Comments.Include(c => c.Product).Where(p => p.ProductId == productId).ToListAsync();
+            return PartialView("_CommentsPartialView");
+        }
+
+        return Content("");
     }
 }
