@@ -7,5 +7,5 @@ public class Comment
     public string Body { get; set; }
     
     public int ProductId { get; set; }
-    public Product Product { get; set; }
+    public Product? Product { get; set; }
 }
