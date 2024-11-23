@@ -22,5 +22,5 @@ public class Product
     public int BrandId { get; set; }
     public Brand? Brand { get; set; }
     
-    public List<Comment> Comments { get; set; }
+    public List<Comment>? Comments { get; set; }
 }

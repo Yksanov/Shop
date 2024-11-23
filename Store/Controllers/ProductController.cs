@@ -221,7 +221,7 @@ public class ProductController : Controller
 
     public async Task<IActionResult> SearchProductResults(string keyWord)
     {
-        List<Product> results = await _context.Products.Include(p => p.Brand)
+        List<Product> results = await _context.Products.Include(p => p.Brand).Include(p => p.Category)
             .Where(p => p.ProductName.Contains(keyWord)).ToListAsync();
         return PartialView("SearchProductResultsPartialView", results);
     }
@@ -251,7 +251,7 @@ public class ProductController : Controller
         if (productId.HasValue)
         {
             List<Comment> comments = await _context.Comments.Include(c => c.Product).Where(p => p.ProductId == productId).ToListAsync();
-            return PartialView("_CommentsPartialView");
+            return PartialView("_CommentsPartialView", comments);
         }
 
         return Content("");

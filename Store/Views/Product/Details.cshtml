@@ -62,11 +62,11 @@
         const getComments = function (){
         let timeOut = setTimeout(function (){
             $('#comments').html('');
-            $('#results').load('@Url.Action("GetComments", "Product")?productId' + @Model.Id);
+            $('#comments').load('@Url.Action("GetComments", "Product")?productId' + @Model.Id);
             }, 2000);
         }
         
-        $('#newCommentButton').click(function (){
+        $('#commentButton').click(function (){
             $('#commentForm').removeClass('invisible');
         });
         $('#newCommentButton').click(function (){

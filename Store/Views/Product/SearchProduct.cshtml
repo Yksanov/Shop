@@ -4,8 +4,8 @@
 }
 
 <div class="text-center">
-    <input type="text" name="searchKey" id="searchKey" required placeholder="Product name /">
-    <button type="button" id="sumbit">Find</button>
+    <input type="text" name="searchKey" id="searchKey" required placeholder="Product name" />
+    <button type="button" id="submit">Find</button>
 </div>
 
 <div class="results"></div>
@@ -14,7 +14,7 @@
 {
     <script>
         $(document).ready(function (){
-        $('#sumbit').click(function (event){
+        $('#submit').click(function (event){
                 let searchKey = $('#searchKey').val();
                 searchKey = encodeURIComponent(searchKey);
                 $('#results').load('@Url.Action("SearchProductResults", "Product") ?keyWord' + searchKey);

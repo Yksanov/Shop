@@ -9,14 +9,14 @@
             <th>Price</th>
             <th>Info</th>
         </tr>
-        @foreach (var phone in Model)
+        @foreach (var product in Model)
         {
         <tr>
-            <td>@phone.ProductName</td>
-            <td>@phone.Brand.Name</td>
-            <td>@phone.Price</td>
+            <td>@product.ProductName</td>
+            <td>@product.Brand.Name</td>
+            <td>@product.Price</td>
             <td>
-                <a asp-action="Details" asp-controller="Product" asp-route-id="@phone.Id">Details</a>
+                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">Details</a>
             </td>
         </tr>
         }
