@@ -64,8 +64,8 @@
         @foreach (var p in Model.Products)
         {
             <div class="col-md-3 col-sm-6 col-12 mb-4 d-flex align-content-sm-stretch">
-                <div class="card border-warning" style="width: 18rem;">
-                    <img src="@p.ImageUrl" class="card-img-top" alt="Image" style="width: 100%; max-width: 288px; height: 200px; object-fit: cover;">
+                <div class="card border-warning pt-3" style="width: 18rem;">
+                    <img src="@p.ImageUrl" class="img-fluid" alt="Image">
                     <div class="card-body">
                         <p class="card-text">Наименование: @p.ProductName</p>
                         <p class="card-text">Цена: @p.Price</p>
@@ -97,5 +97,5 @@
 }
 else
 {
-    <h3>Нету продукта пока!</h3>
+    <h3>Нет продукта пока!</h3>
 }

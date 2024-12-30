@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "D:\\Attractor\\month#2\\Store\\Store\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Store.bundle.scp.css",
-      "PackagePath": "staticwebassets\\Store.bundle.scp.css"
+      "PackagePath": "staticwebassets\\Store.2dlx6k8a0s.bundle.scp.css"
     },
     {
       "Id": "D:\\Attractor\\month#2\\Store\\Store\\wwwroot\\authorize\\813-8130282_denied-png-access-denied-stamp-png.png",
@@ -247,6 +247,10 @@
     {
       "Id": "D:\\Attractor\\month#2\\Store\\Store\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Store.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Store.Microsoft.AspNetCore.StaticWebAssets.props",

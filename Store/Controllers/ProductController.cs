@@ -206,7 +206,9 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Details(int id)
     {
-        List<Product> products = _context.Products.Include(c => c.Comments).Include(p => p.Category)
+        List<Product> products = _context.Products
+            .Include(c => c.Comments)
+            .Include(p => p.Category)
             .Include(p => p.Brand).ToList();
         var findProduct = products.FirstOrDefault(p => p.Id == id);
         return View(findProduct);
