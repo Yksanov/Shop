@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Store.Models;
+using Store.Repository;
 using Store.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/Account/Login";
 });
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
