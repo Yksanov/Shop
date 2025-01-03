@@ -1,18 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Models;
+using Store.Repository;
 
 namespace Store.Controllers;
 
 public class CategoryController : Controller
 {
     private readonly StoreContext _context;
-    private readonly IWebHostEnvironment _environment;
+    private readonly IUserRepository _userRepository;
     
-    public CategoryController(StoreContext context, IWebHostEnvironment environment)
+    public CategoryController(StoreContext context, IUserRepository userRepository)
     {
         _context = context;
-        _environment = environment;
+        _userRepository = userRepository;
     }
     
     // GET

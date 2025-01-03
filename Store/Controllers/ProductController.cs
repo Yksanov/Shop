@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Store.Models;
+using Store.Repository;
 using Store.Services;
 using Store.ViewModels;
 
@@ -12,11 +13,13 @@ public class ProductController : Controller
 {
     private readonly StoreContext _context;
     private readonly IWebHostEnvironment _environment;
+    private readonly IUserRepository _userRepository;
 
-    public ProductController(StoreContext context, IWebHostEnvironment environment)
+    public ProductController(StoreContext context, IWebHostEnvironment environment, IUserRepository userRepository)
     {
         _context = context;
         _environment = environment;
+        _userRepository = userRepository;
     }
 
     // GET
